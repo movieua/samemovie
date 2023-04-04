@@ -8,6 +8,7 @@ let languageVariants = document.getElementsByName("lang");
 let languageForm = document.querySelector("#languageForm");
 let actorsContainer = document.querySelector("#actorsContainer");
 let filmResults = document.querySelector("#filmResults");
+let devider = document.querySelector("#devider")
 
 
 
@@ -135,6 +136,7 @@ function removeActorFromList(id){
 }
 
 match_btn.onclick = function(){
+  devider.style.display = "block"
     if(showList.length == 0){
         alert("No actors!!!")
     }else if (showList.length == 1){
@@ -198,5 +200,6 @@ clear_btn.onclick = function(){
     actorsContainer.innerHTML = "";
     filmResults.innerHTML = "";
     filmResults.style.display = "none";
+    devider.style.display = "none"
 
 }
