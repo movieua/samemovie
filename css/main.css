@@ -1,0 +1,56 @@
+#loader {
+    object-fit: cover;
+    object-position: center;
+    height: 20px;
+    width: 100px;
+    display: inline;;
+}
+
+/* #wrapper {
+    padding: 10px;
+} */
+
+datalist, option {
+    appearance: none;
+    width: 400px;
+    background-color: lightgrey;
+}
+
+#loader {
+    visibility: hidden;
+}
+
+#loader2 {
+    visibility: visible;
+}
+
+.actor_elem, .film_elem {
+    border: 1px solid grey;
+    box-shadow: 1px 1px 4px black;
+    padding: 10px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.card-img-bottom {
+    object-fit: cover;
+    object-position: top;
+}
+
+.remove_actor{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+title {
+    color: lightseagreen;
+}
+
+#filmResults{
+    display: none;
+    border: 2px solid skyblue;
+    border-radius: 4px;
+    padding: 10px;
+}
+

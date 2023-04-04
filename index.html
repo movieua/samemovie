@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="camera.png" type="image/png">
+    <title>Actors Match</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="container" id="wrapper">
+        <p>
+            <a target="_blank" href="https://developers.themoviedb.org/3/getting-started/introduction">API</a>
+        </p>
+        <p>
+        <form id="languageForm">
+            <label for="uk">UA</label><input type="radio" name="lang" id="uk" value="uk-UA">
+            <label for="en">EN</label><input type="radio" name="lang" id="en" value="en-US" checked>
+            <label for="ru">RU</label><input type="radio" name="lang" id="ru" value="ru-RU">
+        </form>
+
+        </p>
+        <div class="row p-1">
+            <div class="col-md-3 col-9">
+                <input type="search" class="form-control" placeholder="Type to search..." id="actor_name"
+                    list="actorsList" />
+                <datalist id="actorsList">
+                </datalist>
+                <img id="loader" height="20" src="row-of-blocks-loader-animation.gif" alt="">
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" id="add">ADD</button>
+                <button class="btn btn-primary" id="match">MATCH</button>
+                <button class="btn btn-primary" id="clear">CLEAR</button>
+            </div>
+        </div>
+        <div id="actorsContainer" class="row">
+
+        </div>
+        <div id="filmResults" class="row">
+
+        </div>
+    </div>
+    
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script src="js/main.js"></script>
+</body>
+
+</html>
