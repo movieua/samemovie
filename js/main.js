@@ -22,7 +22,7 @@ for (let variant of languageVariants) {
   variant.onchange = changeLanguage;
 }
 
-actor_name.oninput = function () {
+actor_name.onkeydown= function () {
   checkIfChoosed();
 
   loader.style.visibility = "visible";
@@ -39,6 +39,12 @@ actor_name.oninput = function () {
     createOptionList(e.data);
   };
 };
+
+function checkIfChoosed() {
+  if (actorsList.length == 1) {
+    datalist.innerHTML = "";
+  }
+}
 
 function changeLanguage() {
   actor_name.value = "";
@@ -66,14 +72,32 @@ function createOptionList(actorsListAnswer) {
 
 add_btn.onclick = function () {
   
-    actor_name.value = ""
+    
 
-  if (actorsList.length != 1) {
+  if (actorsList.length == 0) {
     alert("Person is not found(!");
+  }else if(actorsList.length != 1){
+    checkIfOne()
   } else {
     searchPerson(actorsList[0]);
   }
+
+  actor_name.value = ""
 };
+
+function checkIfOne(){
+  let options = document.querySelectorAll("datalist option")
+
+  for(let i=0; i < options.length; i++){
+    console.log(`Option - ${options[i].value}; input - ${actor_name.value}`)
+    if(options[i].value == actor_name.value){
+      searchPerson(actorsList[i]);
+      return
+    }
+  }
+
+  alert("Choose actor");
+}
 
 function searchPerson(actor) {
   let exists = false;
@@ -96,11 +120,7 @@ function searchPerson(actor) {
   }
 }
 
-function checkIfChoosed() {
-  if (actorsList.length == 1) {
-    datalist.innerHTML = "";
-  }
-}
+
 
 function showActors(actorsList) {
     let imageAdress;
