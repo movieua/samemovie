@@ -118,6 +118,8 @@ function searchPerson(actor) {
     showList.push(actor);
     showActors(showList)
   }
+
+  datalist.innerHTML = ""
 }
 
 
