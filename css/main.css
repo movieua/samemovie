@@ -9,6 +9,10 @@
 /* #wrapper {
     padding: 10px;
 } */
+body {
+    margin: 0px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 datalist, option {
     appearance: none;
@@ -52,6 +56,8 @@ title {
     border: 2px solid skyblue;
     border-radius: 4px;
     padding: 10px;
+    margin-top: 50px;
+    background-color: white;
 }
 
 
@@ -59,5 +65,11 @@ title {
     height: 50px;
     background-color: lightgrey;
     display: none;
+    opacity: 0.3;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px;
 }
 
