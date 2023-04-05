@@ -115,7 +115,7 @@ function showActors(actorsList) {
      
     let actorElem = document.createElement("div");
 
-    actorElem.className = "actor_elem card col-md-2 col-12";
+    actorElem.className = "actor_elem card col-md-2 col-6";
 
     actorElem.innerHTML = `
     <div class="card-body">
@@ -160,7 +160,7 @@ function matchActors(list){
 function showCommonFilms(resultList){
     filmResults.style.display = "flex"
     if(resultList.length == 0){
-        filmResults.innerHTML = "No matches"
+        filmResults.innerHTML += "No matches"
     }
     else {
         showMatches(resultList)
@@ -169,7 +169,8 @@ function showCommonFilms(resultList){
 
 
 function showMatches(list){
-    filmResults.innerHTML = "";
+    filmResults.innerHTML = "<h2>RESULT</h2>";
+
     let imageAdress;    
 
     for (let film of list) {
@@ -181,7 +182,7 @@ function showMatches(list){
         
         let filmElem = document.createElement("div");
     
-        filmElem.className = "film_elem card col-md-2 col-12";
+        filmElem.className = "film_elem card col-md-2 col-6";
     
         filmElem.innerHTML = `
         <div class="card-body">
