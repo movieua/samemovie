@@ -7,12 +7,16 @@ let arrForUse;
 let language;
 
 onmessage = function(e){
+    const abortController = new AbortController();
+    if(e == "abort request"){
+        abortController.abort();
+    }
     actor_name = e.data[0];
     language = e.data[1]
-    fetch(`https://api.themoviedb.org/3/search/person?api_key=${api_key}&known_for_department=Acting&language=${language}&page=1&include_adult=false&query=${actor_name}`)
+    fetch(`https://api.themoviedb.org/3/search/person?api_key=${api_key}&known_for_department=Acting&language=${language}&page=1&include_adult=false&query=${actor_name}`,
+    { signal: abortController.signal })
     .then(resObj=>resObj.json())
-    .then(res=>showResult(res))
-      
+    .then(res=>showResult(res))      
 }
 
 

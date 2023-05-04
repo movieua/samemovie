@@ -22,12 +22,13 @@ for (let variant of languageVariants) {
   variant.onchange = changeLanguage;
 }
 
-actor_name.onkeydown= function () {
+actor_name.oninput = function () {
   checkIfChoosed();
 
   loader.style.visibility = "visible";
   datalist.innerHTML = "";
   if (worker != undefined) {
+    worker.postMessage("abort request")
     worker.terminate();
     worker = undefined;
   }
