@@ -9,8 +9,6 @@ let languageForm = document.querySelector("#languageForm");
 let actorsContainer = document.querySelector("#actorsContainer");
 let filmResults = document.querySelector("#filmResults");
 
-
-
 let actorsList = [];
 let showList = [];
 
@@ -28,7 +26,7 @@ actor_name.oninput = function () {
   loader.style.visibility = "visible";
   datalist.innerHTML = "";
   if (worker != undefined) {
-    worker.postMessage("abort request")
+    worker.postMessage("abort request");
     worker.terminate();
     worker = undefined;
   }
@@ -72,28 +70,25 @@ function createOptionList(actorsListAnswer) {
 }
 
 add_btn.onclick = function () {
-  
-    
-
   if (actorsList.length == 0) {
     alert("Person is not found(!");
-  }else if(actorsList.length != 1){
-    checkIfOne()
+  } else if (actorsList.length != 1) {
+    checkIfOne();
   } else {
     searchPerson(actorsList[0]);
   }
 
-  actor_name.value = ""
+  actor_name.value = "";
 };
 
-function checkIfOne(){
-  let options = document.querySelectorAll("datalist option")
+function checkIfOne() {
+  let options = document.querySelectorAll("datalist option");
 
-  for(let i=0; i < options.length; i++){
-    console.log(`Option - ${options[i].value}; input - ${actor_name.value}`)
-    if(options[i].value == actor_name.value){
+  for (let i = 0; i < options.length; i++) {
+    console.log(`Option - ${options[i].value}; input - ${actor_name.value}`);
+    if (options[i].value == actor_name.value) {
       searchPerson(actorsList[i]);
-      return
+      return;
     }
   }
 
@@ -117,25 +112,23 @@ function searchPerson(actor) {
     alert("This actor is already choosen");
   } else {
     showList.push(actor);
-    showActors(showList)
+    showActors(showList);
   }
 
-  datalist.innerHTML = ""
+  datalist.innerHTML = "";
 }
 
-
-
 function showActors(actorsList) {
-    let imageAdress;
-    actorsContainer.innerHTML = "";
+  let imageAdress;
+  actorsContainer.innerHTML = "";
 
-  for (let actor of actorsList) {    
-    if(actor.profile_path){
-        imageAdress = "https://image.tmdb.org/t/p/w500" + actor.profile_path;
+  for (let actor of actorsList) {
+    if (actor.profile_path) {
+      imageAdress = "https://image.tmdb.org/t/p/w500" + actor.profile_path;
     } else {
-        imageAdress = "No_Image_Available.jpg";
+      imageAdress = "No_Image_Available.jpg";
     }
-     
+
     let actorElem = document.createElement("div");
 
     actorElem.className = "actor_elem card col-md-2 col-6";
@@ -151,76 +144,88 @@ function showActors(actorsList) {
   }
 }
 
-function removeActorFromList(id){
-    showList = showList.filter((actor)=>actor.id != id);
-    showActors(showList)
-
+function removeActorFromList(id) {
+  showList = showList.filter((actor) => actor.id != id);
+  showActors(showList);
 }
 
-match_btn.onclick = function(){
-    if(showList.length == 0){
-        alert("No actors!!!")
-    }else if (showList.length == 1){
-        alert("Only one actor!!!")
-    }
-    else {
-        matchActors(showList);
-    }
+match_btn.onclick = function () {
+  if (showList.length == 0) {
+    alert("No actors!!!");
+  } else if (showList.length == 1) {
+    alert("Only one actor!!!");
+  } else {
+    matchActors(showList);
+  }
+};
+
+function matchActors(list) {
+  let worker2 = new Worker("./js/worker2.js");
+
+  worker2.postMessage(list);
+
+  worker2.onmessage = function (e) {
+    console.log(e.data);
+    showCommonFilms(e.data);
+  };
 }
 
-function matchActors(list){
-    let worker2 = new Worker("./js/worker2.js");
-
-    worker2.postMessage(list);
-
-    worker2.onmessage = function(e){
-        console.log(e.data);
-        showCommonFilms(e.data)
-    }
-
+function showCommonFilms(resultList) {
+  filmResults.style.display = "flex";
+  if (resultList.length == 0) {
+    filmResults.innerHTML += "No matches";
+  } else {
+    showMatches(resultList);
+  }
 }
 
-function showCommonFilms(resultList){
-    filmResults.style.display = "flex"
-    if(resultList.length == 0){
-        filmResults.innerHTML += "No matches"
+function showMatches(list) {
+  filmResults.innerHTML = "<h2>RESULT</h2>";
+
+  let imageAdress;
+
+  for (let film of list) {
+    if (film.poster_path) {
+      imageAdress = "https://image.tmdb.org/t/p/w500" + film.poster_path;
+    } else {
+      imageAdress = "No_Image_Available.jpg";
     }
-    else {
-        showMatches(resultList)
-    }
-}
 
+    let filmElem = document.createElement("div");
 
-function showMatches(list){
-    filmResults.innerHTML = "<h2>RESULT</h2>";
+    filmElem.className = "film_elem card col-md-2 col-6";
 
-    let imageAdress;    
-
-    for (let film of list) {
-        if(film.poster_path){
-            imageAdress = "https://image.tmdb.org/t/p/w500" + film.poster_path;
-        } else {
-            imageAdress = "No_Image_Available.jpg";
-        }
-        
-        let filmElem = document.createElement("div");
-    
-        filmElem.className = "film_elem card col-md-2 col-6";
-    
-        filmElem.innerHTML = `
+    filmElem.innerHTML = `
         <div class="card-body">
             <h6 class="card-title">${film.title}</h6>
-        </div>
-         <img class="card-img-bottom" src="${imageAdress}">
+            <img class="card-img-bottom" src="${imageAdress}">
+            <button class="film_info btn btn-info mt-2">Info</button>
+        </div>         
         `;
-        filmResults.append(filmElem);
-      }
+    filmResults.append(filmElem);
+
+    let info_btn = filmElem.querySelector(".film_info");
+
+    info_btn.addEventListener("click", showFilmInfo(film));
+  }
 }
 
-clear_btn.onclick = function(){
-    showList = [];
-    actorsContainer.innerHTML = "";
-    filmResults.innerHTML = "";
-    filmResults.style.display = "none";
+function showFilmInfo(movie) {
+  let link_start = "https://www.themoviedb.org/movie/";
+  let movie_name = movie.original_title;
+  let name_array = movie_name.toLowerCase().split(" ");
+  name_array[0] = movie.id.toString();
+  let name_string = name_array.join("-");
+  let movie_link = link_start + name_string;
 
+  return function(){
+    window.open(movie_link, "_blank");
+  }  
 }
+
+clear_btn.onclick = function () {
+  showList = [];
+  actorsContainer.innerHTML = "";
+  filmResults.innerHTML = "";
+  filmResults.style.display = "none";
+};
