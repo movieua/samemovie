@@ -88,9 +88,10 @@ title {
     padding: 0;
     list-style: none;
     position: absolute;
-    top:77px;
+    top:37px;
     z-index: 2;
     opacity: 0.95;
+    border-radius: 2px;
 }
 
 #actorsList > li {
