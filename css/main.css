@@ -80,3 +80,30 @@ title {
     margin-top: 20px;
 }
 
+.search_elem{
+    position: relative;
+}
+
+#actorsList{
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top:77px;
+    z-index: 2;
+    opacity: 0.95;
+}
+
+#actorsList > li {
+    padding: 5px;
+    border:1px solid lightgrey;
+    background-color: aliceblue;
+    cursor: pointer;
+}
+
+#actorsList > li > img {
+    height: 40px;
+}
+
+#actorsList > li:hover {
+    background-color: lightgrey;
+}

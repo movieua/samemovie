@@ -57,15 +57,25 @@ function createOptionList(actorsListAnswer) {
   actorsList = actorsListAnswer;
 
   actorsList.forEach((actor) => {
-    let option = document.createElement("option");
-    option.setAttribute("value", actor.name);
+    let imageAdress;
 
-    option.dataset.actorId = actor.id;
-    option.onclick = function () {
-      console.log("ABC");
-      console.log(this);
+    if (actor.profile_path) {
+      imageAdress = "https://image.tmdb.org/t/p/w500" + actor.profile_path;
+    } else {
+      imageAdress = "No_Image_Available.jpg";
+    }
+    let li = document.createElement("li");
+
+    li.innerHTML = `<span> ${actor.name} </span><img src="${imageAdress}">`;
+
+    li.dataset.actorId = actor.id;
+    li.onclick = function () {
+      actor_name.value = actor.name;
+      actorsList = [actor]
+      datalist.innerHTML = "";
+
     };
-    datalist.append(option);
+    datalist.append(li);
   });
 }
 
@@ -82,7 +92,7 @@ add_btn.onclick = function () {
 };
 
 function checkIfOne() {
-  let options = document.querySelectorAll("datalist option");
+  let options = document.querySelectorAll("datalist>li");
 
   for (let i = 0; i < options.length; i++) {
     console.log(`Option - ${options[i].value}; input - ${actor_name.value}`);
@@ -131,7 +141,7 @@ function showActors(actorsList) {
 
     let actorElem = document.createElement("div");
 
-    actorElem.className = "actor_elem card col-md-2 col-6";
+    actorElem.className = "actor_elem card col-md-3 col-12 m-md-2 m-0";
 
     actorElem.innerHTML = `
     <div class="card-body">
@@ -160,6 +170,9 @@ match_btn.onclick = function () {
 };
 
 function matchActors(list) {
+
+  filmResults.innerHTML = "";
+
   let worker2 = new Worker("./js/worker2.js");
 
   worker2.postMessage(list);
@@ -193,7 +206,7 @@ function showMatches(list) {
 
     let filmElem = document.createElement("div");
 
-    filmElem.className = "film_elem card col-md-2 col-6";
+    filmElem.className = "film_elem card col-md-3 col-12 m-md-2 m-0";
 
     filmElem.innerHTML = `
         <div class="card-body">

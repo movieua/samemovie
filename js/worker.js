@@ -57,8 +57,8 @@ function showList(res){
 
 function sortActors(allActorsArray){
     sortedArr = allActorsArray.sort((a,b)=>b.popularity - a.popularity)
-    if(sortedArr.length > 10){
-        arrForUse = sortedArr.slice(0, 11)
+    if(sortedArr.length > 5){
+        arrForUse = sortedArr.slice(0, 6)
     }
     else {
         arrForUse = sortedArr;
