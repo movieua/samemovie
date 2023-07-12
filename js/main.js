@@ -232,7 +232,12 @@ function showFilmInfo(movie) {
   let movie_link = link_start + name_string;
 
   return function(){
-    window.open(movie_link, "_blank");
+    if(window.screen.width > 576){
+      window.open(movie_link, "_blank");
+    } else {
+      window.open(movie_link, "_self");
+    }
+    
   }  
 }
 
